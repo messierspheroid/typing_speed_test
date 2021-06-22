@@ -2,22 +2,24 @@ from tkinter import *
 import pandas as pd
 import random
 
+# goal = "https://typing-speed-test.aoeu.eu/?lang=en"
+
 # initialize application
 root = Tk()
 root.title("Typist Test")
 
 
 class TypistTest:
-    def __init__(self, words_output_file, timer):
-        self.words = words_output_file
-        self.timer = timer
-
-    def txt_to_csv(self):
-        words_input_file = pd.read_csv("words.txt", mode="r")
-        words_output_file = words_input_file.to_csv("words.csv")
+    def __init__(self):
+        pass
 
     def words_to_type(self):
-        pass
+        data = pd.read_csv("words.txt")
+        data_dict = data.to_dict()
+        for word in data_dict:
+            current_word = random.choice(word)
+            print(current_word)
+
 
     def cpm_calc(self):
         pass
@@ -25,8 +27,11 @@ class TypistTest:
     def wpm_calc(self):
         pass
 
-    def timer(self):
-        pass
+    def test_time(self, time_left=60):
+        for i in range(time_left):
+            time_left -= i
+            time_left_int_text.set(time_left)
+
 
 # row 0
 corrected_cpm_label = Label(root, text="Corrected CPM:")
@@ -68,4 +73,5 @@ typing_area = Entry(root, textvariable=typing_area_text)
 typing_area_text.set("type the words here")
 typing_area.grid(row=2, column=0, columnspan=6)
 
+TypistTest().words_to_type()
 root.mainloop()
