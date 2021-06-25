@@ -12,10 +12,11 @@ class Typer(Tk):
         main_frame = Frame(self)
         self.frames = {
             "typer": TypeFrame(self),
+            "words": WordsFrame(self),
             "results": ResultsFrame(self)
         }
 
-        self.show_typer_frame()
+        self.show_typer_statistics()
         main_frame.config(bg="#ffffff")
         main_frame.pack(fill=BOTH, expand=True)
 
@@ -25,25 +26,27 @@ class Typer(Tk):
         frame.place(width=600, height=200, relx=0.5, rely=0.5, anchor=CENTER)
         frame.tkraise()
 
-    def show_typer_frame(self):
-        self.show_frame('typer')
+    def show_typer_statistics(self):
+        self.show_frame("words")
+        self.show_frame("typer")
 
     def show_results_frame(self):
-        self.show_frame('results')
+        self.show_frame("results")
 
 
 class TypeFrame(Frame):
     def __init__(self, parent):
         super().__init__(parent)
 
+        # row 0
         Label(self, text="Corrected CPM:").grid(row=0, column=0)
         cpm_calculated_text = StringVar()
-        cpm_calculated_text.set("?")
+        cpm_calculated_text.set("TBD")
         Entry(self, textvariable=cpm_calculated_text, state='disabled').grid(row=0, column=1)
 
         Label(self, text="WPM:").grid(row=0, column=2)
         wpm_calculated_text = StringVar()
-        wpm_calculated_text.set("?")
+        wpm_calculated_text.set("TBD")
         Entry(self, textvariable=wpm_calculated_text, state='disabled').grid(row=0, column=3)
 
         Label(self, text="Time left:").grid(row=0, column=4)
@@ -55,9 +58,20 @@ class TypeFrame(Frame):
         restart_button_text.set("Restart")
         Button(self, textvariable=restart_button_text, fg="red", relief=FLAT).grid(row=0, column=6)
 
+        # row 2
         typing_area_text = StringVar()
         typing_area_text.set("type the words here")
         Entry(self, textvariable=typing_area_text).grid(row=2, column=0, columnspan=6)
+
+
+class WordsFrame(Frame):
+    def __init__(self, parent):
+        super().__init__(parent)
+
+        words = pd.read_csv("words.txt").values()
+
+        frame = Frame(self, bg="#ffffff")
+        Label(self, text=words).tkraise()
 
 
 class ResultsFrame(Frame):
