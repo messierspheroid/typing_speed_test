@@ -1,3 +1,4 @@
+import csv
 from tkinter import *
 
 import pandas as pd
@@ -40,28 +41,31 @@ class TypeFrame(Frame):
         Label(self, text="Corrected CPM:").grid(row=0, column=0)
         cpm_calculated_text = StringVar()
         cpm_calculated_text.set("TBD")
-        Entry(self, textvariable=cpm_calculated_text, state='disabled').grid(row=0, column=1)
+        Entry(self, textvariable=cpm_calculated_text, state="disabled").grid(row=0, column=1)
 
         Label(self, text="WPM:").grid(row=0, column=2)
         wpm_calculated_text = StringVar()
         wpm_calculated_text.set("TBD")
-        Entry(self, textvariable=wpm_calculated_text, state='disabled').grid(row=0, column=3)
+        Entry(self, textvariable=wpm_calculated_text, state="disabled").grid(row=0, column=3)
 
         Label(self, text="Time left:").grid(row=0, column=4)
         time_left_int_text = IntVar()
         time_left_int_text.set(60)
-        Entry(self, textvariable=time_left_int_text, state='disabled').grid(row=0, column=5)
+        Entry(self, textvariable=time_left_int_text, state="disabled").grid(row=0, column=5)
 
         restart_button_text = StringVar()
         restart_button_text.set("Restart")
         Button(self, textvariable=restart_button_text, fg="red", relief=FLAT).grid(row=0, column=6)
 
-        words_txt = pd.read_csv("words.txt")
-        words_csv = words_txt.to_csv("word.csv", index=None)
-        words_to_type = Text(self).grid(row=1, column=0, columnspan=6)
-        with open(words_csv, "r") as file:
-            words = file.read()
-            words_to_type.insert("1.0", words)
+        ## file converter if needed
+        # words_txt = pd.read_csv("words.txt")
+        words_csv = pd.read_csv("words.csv")
+        # print(type(words_csv))
+        words = StringVar()
+        words.set(words_csv)
+        # print(words)
+        Text(self, width=50, height=3).grid(row=1, column=0, columnspan=6)
+        
 
         # row 2
         typing_area_text = StringVar()
