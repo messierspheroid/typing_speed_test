@@ -56,12 +56,13 @@ class TypeFrame(Frame):
         restart_button_text.set("Restart")
         Button(self, textvariable=restart_button_text, fg="red", relief=FLAT).grid(row=0, column=6)
 
-        words_txt = pd.read_csv("words.txt")
-        words_csv = words_txt.to_csv("word.csv", index=None)
-        words_to_type = Text(self).grid(row=1, column=0, columnspan=6)
-        with open(words_csv, "r") as file:
-            words = file.read()
-            words_to_type.insert("1.0", words)
+        # words_txt = pd.read_csv("words.txt")
+        # words_csv = words_txt.to_csv("word.csv", index=None)
+        # words_to_type = Text(self).grid(row=1, column=0, columnspan=6)
+        Text(self).grid(row=1, column=0, columnspan=6)
+        # with open(words_csv, "r") as file:
+        #     words = file.read()
+        #     words_to_type.insert("1.0", words)
 
         # row 2
         typing_area_text = StringVar()
